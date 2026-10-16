@@ -10,6 +10,7 @@ import {
   Bot, 
   ArrowRight,
   ShieldCheck, 
+  ShieldAlert,
   Sparkles,
   Lock,
   HeartPulse
@@ -22,6 +23,7 @@ function Hero() {
 
   const searchTabs = [
     { id: "medicine", label: "Medicines", icon: Pill, path: "/medicine", placeholder: "Search medicine (e.g., Paracetamol, Amoxicillin, Metformin)..." },
+    { id: "interactions", label: "Interactions", icon: ShieldAlert, path: "/interactions", placeholder: "Check drug or food combinations (e.g., Warfarin + Ibuprofen, Metformin + Alcohol)..." },
     { id: "disease", label: "Diseases", icon: Activity, path: "/disease", placeholder: "Search disease (e.g., Type 2 Diabetes, Hypertension, Asthma)..." },
     { id: "symptoms", label: "Symptoms", icon: Stethoscope, path: "/symptoms", placeholder: "Describe symptoms (e.g., fever, dry cough, severe headache)..." },
     { id: "remedies", label: "Remedies", icon: Leaf, path: "/remedies", placeholder: "Search health condition for natural home remedies..." },
@@ -133,6 +135,13 @@ function Hero() {
               className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-medium transition-colors cursor-pointer text-xs sm:text-sm"
             >
               💊 Paracetamol
+            </button>
+            <button
+              type="button"
+              onClick={() => handleChipClick("interactions", "Warfarin, Ibuprofen")}
+              className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-medium transition-colors cursor-pointer text-xs sm:text-sm"
+            >
+              ⚠️ Drug Interactions
             </button>
             <button
               type="button"
