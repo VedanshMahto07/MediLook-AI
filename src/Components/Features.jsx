@@ -110,11 +110,7 @@ function Features() {
       
       {/* Clinical Intelligence Section */}
       <div>
-        <div className="text-center max-w-3xl mx-auto mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold mb-3">
-            <Sparkles size={15} className="text-emerald-600" />
-            <span>Clinical Intelligence Hub</span>
-          </div>
+        <div className="text-center max-w-3xl mx-auto mb-8"> 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
             Comprehensive Medical Guidance, At Your Fingertips
           </h2>

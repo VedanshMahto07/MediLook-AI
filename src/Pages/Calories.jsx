@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flame, Activity, AlertCircle, RefreshCw, CheckCircle2, Info } from "lucide-react";
+import { Flame, Activity, AlertCircle, RefreshCw, CheckCircle2, Info, PieChart, BarChart3, Target, Utensils, Zap } from "lucide-react";
 
 function Calories() {
   const [age, setAge] = useState("");
@@ -45,6 +45,51 @@ function Calories() {
       extremeLoss: Math.max(extremeLoss, 1200),
       weightGain,
     });
+  };
+
+  const [goal, setGoal] = useState("maintenance");
+  const [macroDiet, setMacroDiet] = useState("balanced");
+
+  const getTargetCalories = () => {
+    if (!result) return 2000;
+    if (goal === "fatLoss") return result.fatLoss;
+    if (goal === "mildLoss") return result.mildLoss;
+    if (goal === "weightGain") return result.weightGain;
+    return result.maintenance;
+  };
+
+  const getMacroBreakdown = () => {
+    const target = getTargetCalories();
+    let pRatio = 0.30;
+    let cRatio = 0.40;
+    let fRatio = 0.30;
+
+    if (macroDiet === "highProtein") {
+      pRatio = 0.40;
+      cRatio = 0.35;
+      fRatio = 0.25;
+    } else if (macroDiet === "lowCarb") {
+      pRatio = 0.35;
+      cRatio = 0.15;
+      fRatio = 0.50;
+    }
+
+    const pCal = Math.round(target * pRatio);
+    const cCal = Math.round(target * cRatio);
+    const fCal = Math.round(target * fRatio);
+
+    return {
+      target,
+      pRatio: Math.round(pRatio * 100),
+      cRatio: Math.round(cRatio * 100),
+      fRatio: Math.round(fRatio * 100),
+      pGrams: Math.round(pCal / 4),
+      cGrams: Math.round(cCal / 4),
+      fGrams: Math.round(fCal / 9),
+      pCal,
+      cCal,
+      fCal
+    };
   };
 
   const resetForm = () => {
@@ -255,44 +300,339 @@ function Calories() {
 
           {/* Goal-Driven Caloric Targets */}
           <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
-            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <Activity size={18} className="text-orange-600" />
-              <span>Target Caloric Windows by Health Goal</span>
+            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Activity size={18} className="text-orange-600" />
+                <span>Target Caloric Windows by Health Goal</span>
+              </span>
+              <span className="text-xs text-slate-400 font-normal">Click a goal to update macro chart</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
               
-              <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200">
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-800">
-                  Mild Weight Loss (-0.25 kg/wk)
-                </span>
+              <button
+                type="button"
+                onClick={() => setGoal("mildLoss")}
+                className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                  goal === "mildLoss"
+                    ? "bg-amber-100/70 border-amber-400 ring-2 ring-amber-400/30"
+                    : "bg-amber-50/70 border-amber-200 hover:bg-amber-100/50"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-800">
+                    Mild Weight Loss (-0.25 kg/wk)
+                  </span>
+                  {goal === "mildLoss" && <CheckCircle2 size={16} className="text-amber-600 shrink-0" />}
+                </div>
                 <div className="text-3xl font-bold text-slate-900 my-2">
                   {result.mildLoss} <span className="text-sm font-normal text-slate-500">kcal</span>
                 </div>
-                <p className="text-[11px] text-amber-900/80">Sustainable deficit without metabolic fatigue.</p>
-              </div>
+                <p className="text-xs text-amber-900/80">Sustainable deficit without metabolic fatigue.</p>
+              </button>
 
-              <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-                  Standard Fat Loss (-0.5 kg/wk)
-                </span>
+              <button
+                type="button"
+                onClick={() => setGoal("fatLoss")}
+                className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                  goal === "fatLoss"
+                    ? "bg-emerald-100/70 border-emerald-400 ring-2 ring-emerald-400/30"
+                    : "bg-emerald-50/70 border-emerald-200 hover:bg-emerald-100/50"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                    Standard Fat Loss (-0.5 kg/wk)
+                  </span>
+                  {goal === "fatLoss" && <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />}
+                </div>
                 <div className="text-3xl font-bold text-slate-900 my-2">
                   {result.fatLoss} <span className="text-sm font-normal text-slate-500">kcal</span>
                 </div>
-                <p className="text-[11px] text-emerald-900/80">Clinically recommended gold-standard deficit.</p>
-              </div>
+                <p className="text-xs text-emerald-900/80">Clinically recommended gold-standard deficit.</p>
+              </button>
 
-              <div className="p-5 rounded-2xl bg-blue-50/70 border border-blue-200">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-800">
-                  Muscle & Weight Gain (+0.25 kg/wk)
-                </span>
+              <button
+                type="button"
+                onClick={() => setGoal("weightGain")}
+                className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                  goal === "weightGain"
+                    ? "bg-blue-100/70 border-blue-400 ring-2 ring-blue-400/30"
+                    : "bg-blue-50/70 border-blue-200 hover:bg-blue-100/50"
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-blue-800">
+                    Muscle Gain (+0.25 kg/wk)
+                  </span>
+                  {goal === "weightGain" && <CheckCircle2 size={16} className="text-blue-600 shrink-0" />}
+                </div>
                 <div className="text-3xl font-bold text-slate-900 my-2">
                   {result.weightGain} <span className="text-sm font-normal text-slate-500">kcal</span>
                 </div>
-                <p className="text-[11px] text-blue-900/80">Surplus paired with resistance training.</p>
-              </div>
+                <p className="text-xs text-blue-900/80">Surplus paired with resistance training.</p>
+              </button>
 
             </div>
+          </div>
+
+          {/* Interactive Macronutrient Donut Chart Section */}
+          {(() => {
+            const macros = getMacroBreakdown();
+            const radius = 54;
+            const circumference = 2 * Math.PI * radius; // ~339.29
+            
+            // Calculate stroke segments
+            const pLength = (macros.pRatio / 100) * circumference;
+            const cLength = (macros.cRatio / 100) * circumference;
+            const fLength = (macros.fRatio / 100) * circumference;
+
+            const pOffset = 0;
+            const cOffset = pLength;
+            const fOffset = pLength + cLength;
+
+            return (
+              <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
+                
+                {/* Header & Controls */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                      <PieChart size={20} className="text-emerald-600" />
+                      <span>Target Macronutrient Distribution Chart</span>
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1">
+                      Computed for <strong className="text-slate-800 capitalize">{goal.replace(/([A-Z])/g, " $1")}</strong> ({macros.target} kcal/day)
+                    </p>
+                  </div>
+
+                  {/* Ratio Preset Switcher */}
+                  <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl text-xs font-semibold">
+                    <button
+                      type="button"
+                      onClick={() => setMacroDiet("balanced")}
+                      className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        macroDiet === "balanced"
+                          ? "bg-white text-emerald-800 shadow-xs"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      Balanced
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMacroDiet("highProtein")}
+                      className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        macroDiet === "highProtein"
+                          ? "bg-white text-emerald-800 shadow-xs"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      High Protein
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMacroDiet("lowCarb")}
+                      className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        macroDiet === "lowCarb"
+                          ? "bg-white text-emerald-800 shadow-xs"
+                          : "text-slate-600 hover:text-slate-900"
+                      }`}
+                    >
+                      Low Carb
+                    </button>
+                  </div>
+                </div>
+
+                {/* Donut & Stats Layout */}
+                <div className="pt-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  
+                  {/* Vector SVG Donut Chart */}
+                  <div className="lg:col-span-5 flex flex-col items-center justify-center">
+                    <div className="relative w-48 h-48 sm:w-52 sm:h-52">
+                      <svg viewBox="0 0 140 140" className="w-full h-full -rotate-90">
+                        {/* Background Track */}
+                        <circle
+                          cx="70"
+                          cy="70"
+                          r={radius}
+                          fill="none"
+                          stroke="#f1f5f9"
+                          strokeWidth="15"
+                        />
+                        {/* Protein Segment */}
+                        <circle
+                          cx="70"
+                          cy="70"
+                          r={radius}
+                          fill="none"
+                          stroke="#10b981"
+                          strokeWidth="15"
+                          strokeDasharray={`${pLength} ${circumference - pLength}`}
+                          strokeDashoffset={-pOffset}
+                          className="transition-all duration-700 ease-out"
+                        />
+                        {/* Carbs Segment */}
+                        <circle
+                          cx="70"
+                          cy="70"
+                          r={radius}
+                          fill="none"
+                          stroke="#f59e0b"
+                          strokeWidth="15"
+                          strokeDasharray={`${cLength} ${circumference - cLength}`}
+                          strokeDashoffset={-cOffset}
+                          className="transition-all duration-700 ease-out"
+                        />
+                        {/* Fats Segment */}
+                        <circle
+                          cx="70"
+                          cy="70"
+                          r={radius}
+                          fill="none"
+                          stroke="#6366f1"
+                          strokeWidth="15"
+                          strokeDasharray={`${fLength} ${circumference - fLength}`}
+                          strokeDashoffset={-fOffset}
+                          className="transition-all duration-700 ease-out"
+                        />
+                      </svg>
+
+                      {/* Center Label */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                        <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                          {macros.target}
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                          kcal / day
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4 mt-3 text-xs font-semibold text-slate-600">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        Protein ({macros.pRatio}%)
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        Carbs ({macros.cRatio}%)
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                        Fats ({macros.fRatio}%)
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Macro Cards */}
+                  <div className="lg:col-span-7 space-y-3.5">
+                    
+                    {/* Protein */}
+                    <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                          🥩
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">Protein</h4>
+                          <p className="text-xs text-slate-500">{macros.pCal} kcal • Muscle repair & satiety</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-extrabold text-emerald-800">{macros.pGrams}g</span>
+                        <span className="block text-[11px] font-semibold text-emerald-600">{macros.pRatio}% of intake</span>
+                      </div>
+                    </div>
+
+                    {/* Carbs */}
+                    <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/80 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
+                          🌾
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">Complex Carbohydrates</h4>
+                          <p className="text-xs text-slate-500">{macros.cCal} kcal • Glycogen & mental energy</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-extrabold text-amber-800">{macros.cGrams}g</span>
+                        <span className="block text-[11px] font-semibold text-amber-600">{macros.cRatio}% of intake</span>
+                      </div>
+                    </div>
+
+                    {/* Healthy Fats */}
+                    <div className="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-200/80 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm">
+                          🥑
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">Healthy Fats</h4>
+                          <p className="text-xs text-slate-500">{macros.fCal} kcal • Hormones & organ support</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-2xl font-extrabold text-indigo-800">{macros.fGrams}g</span>
+                        <span className="block text-[11px] font-semibold text-indigo-600">{macros.fRatio}% of intake</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+            );
+          })()}
+
+          {/* Caloric Intake Spectrum Bar Chart */}
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <BarChart3 size={20} className="text-orange-600" />
+              <span>Comparative Calorie Spectrum Chart</span>
+            </h3>
+            <p className="text-xs text-slate-500 mb-6">
+              Compare your metabolic baseline against all deficit and surplus caloric tiers.
+            </p>
+
+            {(() => {
+              const maxScale = Math.max(result.weightGain, result.maintenance) + 400;
+              const tiers = [
+                { label: "Basal Metabolic Rate (BMR)", kcal: result.bmr, color: "bg-slate-400", desc: "Complete physical rest" },
+                { label: "Extreme Deficit", kcal: result.extremeLoss, color: "bg-rose-500", desc: "-750 kcal/day" },
+                { label: "Standard Fat Loss", kcal: result.fatLoss, color: "bg-emerald-500", desc: "-500 kcal/day" },
+                { label: "Mild Deficit", kcal: result.mildLoss, color: "bg-amber-500", desc: "-250 kcal/day" },
+                { label: "Daily Maintenance (TDEE)", kcal: result.maintenance, color: "bg-teal-600", desc: "Energy equilibrium" },
+                { label: "Muscle & Weight Gain", kcal: result.weightGain, color: "bg-blue-600", desc: "+400 kcal/day" },
+              ];
+
+              return (
+                <div className="space-y-4">
+                  {tiers.map((tier, idx) => {
+                    const widthPercent = Math.min(Math.round((tier.kcal / maxScale) * 100), 100);
+                    return (
+                      <div key={idx} className="space-y-1.5">
+                        <div className="flex items-center justify-between text-xs sm:text-sm font-semibold">
+                          <span className="text-slate-800 flex items-center gap-2">
+                            <span>{tier.label}</span>
+                            <span className="text-[11px] font-normal text-slate-400">({tier.desc})</span>
+                          </span>
+                          <span className="text-slate-900 font-bold">{tier.kcal} kcal</span>
+                        </div>
+                        <div className="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden p-0.5">
+                          <div
+                            className={`h-full rounded-full transition-all duration-700 ease-out ${tier.color}`}
+                            style={{ width: `${widthPercent}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
           </div>
 
         </div>

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Heart, Activity, AlertCircle, RefreshCw, Info, Flame, ShieldAlert } from "lucide-react";
+import { Heart, Activity, AlertCircle, RefreshCw, Info, Flame, ShieldAlert, BarChart3, Timer, Sparkles, TrendingUp } from "lucide-react";
 
 function HeartRateZone() {
   const [age, setAge] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [selectedZone, setSelectedZone] = useState(null);
 
   const calculateHeartRate = (e) => {
     if (e) e.preventDefault();
@@ -124,13 +125,166 @@ function HeartRateZone() {
             </p>
           </div>
 
+          {/* Cardiovascular Training Spectrum Chart */}
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <BarChart3 size={20} className="text-rose-600" />
+                  <span>Continuous Cardiovascular Training Spectrum</span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Click any zone segment to inspect physiological fuel sources, breathing pace, and weekly targets.
+                </p>
+              </div>
+              <span className="text-xs font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200 self-start sm:self-auto">
+                Fox Protocol
+              </span>
+            </div>
+
+            {/* Continuous Spectrum Bar */}
+            <div className="space-y-3">
+              <div className="grid grid-cols-5 gap-1.5 h-12 sm:h-14 rounded-2xl p-1 bg-slate-100/90 border border-slate-200">
+                
+                {/* Z1 */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedZone(selectedZone === "z1" ? null : "z1")}
+                  className={`h-full rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center text-white ${
+                    selectedZone === "z1" || !selectedZone ? "bg-sky-500 shadow-sm ring-2 ring-sky-400" : "bg-sky-400/50"
+                  }`}
+                  title="Zone 1: Active Recovery"
+                >
+                  <span className="text-xs font-extrabold">Z1</span>
+                  <span className="text-[10px] hidden sm:inline opacity-90">50-60%</span>
+                </button>
+
+                {/* Z2 */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedZone(selectedZone === "z2" ? null : "z2")}
+                  className={`h-full rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center text-white ${
+                    selectedZone === "z2" || !selectedZone ? "bg-emerald-500 shadow-sm ring-2 ring-emerald-400" : "bg-emerald-400/50"
+                  }`}
+                  title="Zone 2: Aerobic Base / Fat Burn"
+                >
+                  <span className="text-xs font-extrabold">Z2</span>
+                  <span className="text-[10px] hidden sm:inline opacity-90">60-70%</span>
+                </button>
+
+                {/* Z3 */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedZone(selectedZone === "z3" ? null : "z3")}
+                  className={`h-full rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center text-white ${
+                    selectedZone === "z3" || !selectedZone ? "bg-teal-500 shadow-sm ring-2 ring-teal-400" : "bg-teal-400/50"
+                  }`}
+                  title="Zone 3: Aerobic Endurance"
+                >
+                  <span className="text-xs font-extrabold">Z3</span>
+                  <span className="text-[10px] hidden sm:inline opacity-90">70-80%</span>
+                </button>
+
+                {/* Z4 */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedZone(selectedZone === "z4" ? null : "z4")}
+                  className={`h-full rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center text-white ${
+                    selectedZone === "z4" || !selectedZone ? "bg-amber-500 shadow-sm ring-2 ring-amber-400" : "bg-amber-400/50"
+                  }`}
+                  title="Zone 4: Anaerobic Threshold"
+                >
+                  <span className="text-xs font-extrabold">Z4</span>
+                  <span className="text-[10px] hidden sm:inline opacity-90">80-90%</span>
+                </button>
+
+                {/* Z5 */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedZone(selectedZone === "z5" ? null : "z5")}
+                  className={`h-full rounded-xl transition-all cursor-pointer flex flex-col items-center justify-center text-white ${
+                    selectedZone === "z5" || !selectedZone ? "bg-rose-500 shadow-sm ring-2 ring-rose-400" : "bg-rose-400/50"
+                  }`}
+                  title="Zone 5: Peak / VO2 Max"
+                >
+                  <span className="text-xs font-extrabold">Z5</span>
+                  <span className="text-[10px] hidden sm:inline opacity-90">90-100%</span>
+                </button>
+
+              </div>
+
+              {/* Spectrum Range Ticks */}
+              <div className="grid grid-cols-5 text-center text-[11px] sm:text-xs font-bold text-slate-500 px-1">
+                <div>{result.zone1.min}–{result.zone1.max} <span className="font-normal text-[10px]">bpm</span></div>
+                <div>{result.zone2.min}–{result.zone2.max} <span className="font-normal text-[10px]">bpm</span></div>
+                <div>{result.zone3.min}–{result.zone3.max} <span className="font-normal text-[10px]">bpm</span></div>
+                <div>{result.zone4.min}–{result.zone4.max} <span className="font-normal text-[10px]">bpm</span></div>
+                <div>{result.zone5.min}–{result.zone5.max} <span className="font-normal text-[10px]">bpm</span></div>
+              </div>
+            </div>
+
+            {/* Weekly Target Recommendations (AHA Guidelines) */}
+            <div className="mt-8 pt-6 border-t border-slate-100">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-4 flex items-center gap-1.5">
+                <Timer size={15} className="text-slate-400" />
+                <span>Cardiologist Weekly Dose Guideline (American Heart Association)</span>
+              </h4>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-emerald-800">Zone 2 Base Cardio</span>
+                    <span className="text-xs font-bold text-emerald-700 bg-white px-2 py-0.5 rounded-full border border-emerald-200">
+                      150–180 min/wk
+                    </span>
+                  </div>
+                  <p className="text-xs text-emerald-950/80 mt-2">
+                    Mitochondrial biogenesis & high fat-oxidation rate. Talk test: Easy conversation.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-teal-50/70 border border-teal-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-teal-800">Zone 3–4 Threshold</span>
+                    <span className="text-xs font-bold text-teal-700 bg-white px-2 py-0.5 rounded-full border border-teal-200">
+                      45–75 min/wk
+                    </span>
+                  </div>
+                  <p className="text-xs text-teal-950/80 mt-2">
+                    Elevates stroke volume and lactate clearing threshold. Talk test: Broken sentences.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-rose-800">Zone 5 Peak Intervals</span>
+                    <span className="text-xs font-bold text-rose-700 bg-white px-2 py-0.5 rounded-full border border-rose-200">
+                      10–15 min/wk
+                    </span>
+                  </div>
+                  <p className="text-xs text-rose-950/80 mt-2">
+                    Maximal VO2 capacity & heart chamber elasticity. Talk test: Cannot speak.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
           {/* 5 Zones Grid */}
           <div className="space-y-3.5">
             
             {/* Zone 1 */}
-            <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div 
+              onClick={() => setSelectedZone(selectedZone === "z1" ? null : "z1")}
+              className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                selectedZone === "z1"
+                  ? "bg-sky-50 border-sky-400 ring-2 ring-sky-400/30 shadow-xs"
+                  : "bg-white border-slate-200/90 hover:border-slate-300 shadow-xs"
+              }`}
+            >
               <div className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center">
+                <span className="w-8 h-8 rounded-xl bg-sky-100 text-sky-800 font-bold text-xs flex items-center justify-center">
                   Z1
                 </span>
                 <div>
@@ -144,7 +298,14 @@ function HeartRateZone() {
             </div>
 
             {/* Zone 2 */}
-            <div className="p-5 rounded-2xl bg-emerald-50/40 border border-emerald-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div 
+              onClick={() => setSelectedZone(selectedZone === "z2" ? null : "z2")}
+              className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                selectedZone === "z2"
+                  ? "bg-emerald-100/70 border-emerald-400 ring-2 ring-emerald-400/30 shadow-xs"
+                  : "bg-emerald-50/40 border-emerald-200 hover:border-emerald-300 shadow-xs"
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center">
                   Z2
@@ -160,23 +321,37 @@ function HeartRateZone() {
             </div>
 
             {/* Zone 3 */}
-            <div className="p-5 rounded-2xl bg-blue-50/40 border border-blue-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div 
+              onClick={() => setSelectedZone(selectedZone === "z3" ? null : "z3")}
+              className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                selectedZone === "z3"
+                  ? "bg-teal-100/70 border-teal-400 ring-2 ring-teal-400/30 shadow-xs"
+                  : "bg-teal-50/40 border-teal-200 hover:border-teal-300 shadow-xs"
+              }`}
+            >
               <div className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-xl bg-blue-100 text-blue-800 font-bold text-xs flex items-center justify-center">
+                <span className="w-8 h-8 rounded-xl bg-teal-100 text-teal-800 font-bold text-xs flex items-center justify-center">
                   Z3
                 </span>
                 <div>
-                  <h4 className="font-bold text-sm text-blue-950">{result.zone3.name} (70% - 80%)</h4>
+                  <h4 className="font-bold text-sm text-teal-950">{result.zone3.name} (70% - 80%)</h4>
                   <p className="text-xs text-slate-600">{result.zone3.desc}</p>
                 </div>
               </div>
-              <div className="text-lg font-bold text-blue-800 whitespace-nowrap bg-blue-100/70 px-4 py-1.5 rounded-xl border border-blue-200">
-                {result.zone3.min} – {result.zone3.max} <span className="text-xs font-normal text-blue-600">bpm</span>
+              <div className="text-lg font-bold text-teal-800 whitespace-nowrap bg-teal-100/70 px-4 py-1.5 rounded-xl border border-teal-200">
+                {result.zone3.min} – {result.zone3.max} <span className="text-xs font-normal text-teal-600">bpm</span>
               </div>
             </div>
 
             {/* Zone 4 */}
-            <div className="p-5 rounded-2xl bg-orange-50/40 border border-orange-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div 
+              onClick={() => setSelectedZone(selectedZone === "z4" ? null : "z4")}
+              className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                selectedZone === "z4"
+                  ? "bg-amber-100/70 border-amber-400 ring-2 ring-amber-400/30 shadow-xs"
+                  : "bg-amber-50/40 border-amber-200 hover:border-amber-300 shadow-xs"
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <span className="w-8 h-8 rounded-xl bg-orange-100 text-orange-800 font-bold text-xs flex items-center justify-center">
                   Z4
@@ -192,7 +367,14 @@ function HeartRateZone() {
             </div>
 
             {/* Zone 5 */}
-            <div className="p-5 rounded-2xl bg-rose-50/40 border border-rose-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div 
+              onClick={() => setSelectedZone(selectedZone === "z5" ? null : "z5")}
+              className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                selectedZone === "z5"
+                  ? "bg-rose-100/70 border-rose-400 ring-2 ring-rose-400/30 shadow-xs"
+                  : "bg-rose-50/40 border-rose-200 hover:border-rose-300 shadow-xs"
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <span className="w-8 h-8 rounded-xl bg-rose-100 text-rose-800 font-bold text-xs flex items-center justify-center">
                   Z5

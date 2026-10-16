@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserCheck, CheckCircle2, AlertCircle, RefreshCw, Info } from "lucide-react";
+import { UserCheck, CheckCircle2, AlertCircle, RefreshCw, Info, BarChart3 } from "lucide-react";
 
 function BodyFat() {
   const [age, setAge] = useState("");
@@ -263,6 +263,7 @@ function BodyFat() {
                 <div className="text-2xl font-bold text-slate-900 mt-1">
                   {result.fatMass} <span className="text-sm font-normal text-slate-500">kg</span>
                 </div>
+                <span className="text-[11px] font-semibold text-purple-600 mt-0.5 block">{result.percentage}% Total</span>
               </div>
 
               <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100">
@@ -272,8 +273,66 @@ function BodyFat() {
                 <div className="text-2xl font-bold text-slate-900 mt-1">
                   {result.leanMass} <span className="text-sm font-normal text-slate-500">kg</span>
                 </div>
+                <span className="text-[11px] font-semibold text-emerald-600 mt-0.5 block">{(100 - parseFloat(result.percentage)).toFixed(1)}% Total</span>
               </div>
             </div>
+          </div>
+
+          {/* Visual Body Composition Split Bar */}
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
+              <BarChart3 size={20} className="text-purple-600" />
+              <span>Body Tissue Composition Spectrum</span>
+            </h3>
+            <p className="text-xs text-slate-500 mb-5">
+              Proportion of metabolically active lean mass versus adipose lipid storage.
+            </p>
+
+            {(() => {
+              const fatPct = Math.min(Math.max(parseFloat(result.percentage), 2), 65);
+              const leanPct = 100 - fatPct;
+
+              return (
+                <div className="space-y-4">
+                  {/* Visual Bar */}
+                  <div className="w-full h-8 rounded-2xl bg-slate-100 overflow-hidden flex p-1 border border-slate-200">
+                    <div
+                      className="h-full bg-emerald-500 rounded-l-xl transition-all duration-700 ease-out flex items-center justify-center text-white text-xs font-extrabold"
+                      style={{ width: `${leanPct}%` }}
+                      title={`Lean Mass: ${leanPct.toFixed(1)}%`}
+                    >
+                      {leanPct > 18 ? `${leanPct.toFixed(1)}% Lean` : ""}
+                    </div>
+                    <div
+                      className="h-full bg-purple-500 rounded-r-xl transition-all duration-700 ease-out flex items-center justify-center text-white text-xs font-extrabold"
+                      style={{ width: `${fatPct}%` }}
+                      title={`Fat Mass: ${fatPct.toFixed(1)}%`}
+                    >
+                      {fatPct > 15 ? `${fatPct.toFixed(1)}% Fat` : ""}
+                    </div>
+                  </div>
+
+                  {/* Legend & Descriptions */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+                    <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-start gap-2.5">
+                      <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0 mt-0.5"></span>
+                      <div>
+                        <strong className="text-emerald-950 block font-bold">Lean Body Mass ({result.leanMass} kg)</strong>
+                        <span className="text-emerald-900/80">Includes skeletal muscle, organ tissue, bone density, and intracellular water.</span>
+                      </div>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-100 flex items-start gap-2.5">
+                      <span className="w-3 h-3 rounded-full bg-purple-500 shrink-0 mt-0.5"></span>
+                      <div>
+                        <strong className="text-purple-950 block font-bold">Adipose Fat Mass ({result.fatMass} kg)</strong>
+                        <span className="text-purple-900/80">Essential physiological lipids and visceral/subcutaneous energy stores.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
         </div>
