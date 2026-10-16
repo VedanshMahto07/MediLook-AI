@@ -214,7 +214,7 @@ function Bmi() {
 
               return (
                 <div className="relative max-w-xs mx-auto my-2">
-                  <svg viewBox="0 0 240 145" className="w-full h-auto overflow-visible">
+                  <svg viewBox="0 0 240 152" className="w-full h-auto overflow-visible">
                     {/* Background Track */}
                     <path
                       d="M 35 125 A 85 85 0 0 1 205 125"
@@ -276,12 +276,12 @@ function Bmi() {
                       className="-rotate-180 origin-[120px_125px]"
                     />
 
-                    {/* Ticks & Labels */}
-                    <text x="35" y="142" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">12</text>
-                    <text x="78" y="50" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">18.5</text>
-                    <text x="120" y="30" textAnchor="middle" className="text-[10px] fill-emerald-600 font-bold">25.0</text>
-                    <text x="165" y="50" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">30.0</text>
-                    <text x="205" y="142" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">38+</text>
+                    {/* Ticks & Labels (Positioned cleanly outside the arc) */}
+                    <text x="28" y="146" textAnchor="middle" className="text-[11px] fill-slate-400 font-bold">12</text>
+                    <text x="44" y="46" textAnchor="middle" className="text-[11px] fill-slate-500 font-bold">18.5</text>
+                    <text x="120" y="18" textAnchor="middle" className="text-[11px] fill-emerald-600 font-extrabold">25.0</text>
+                    <text x="184" y="38" textAnchor="middle" className="text-[11px] fill-slate-500 font-bold">30.0</text>
+                    <text x="212" y="146" textAnchor="middle" className="text-[11px] fill-slate-400 font-bold">38+</text>
 
                     {/* Needle Indicator */}
                     <g

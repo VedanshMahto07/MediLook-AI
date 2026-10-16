@@ -21,10 +21,10 @@ function Navbar() {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Medicines", path: "/medicine", icon: Pill },
+    { name: "Interactions", path: "/interactions", icon: ShieldAlert },
     { name: "Diseases", path: "/disease", icon: Activity },
     { name: "Symptoms", path: "/symptoms", icon: Stethoscope },
     { name: "Remedies", path: "/remedies", icon: Leaf },
-    { name: "AI Doctor", path: "/doctor", icon: Bot, },
     { name: "Health Tools", path: "/health-tools", icon: Calculator },
   ];
 

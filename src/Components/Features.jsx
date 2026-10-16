@@ -13,6 +13,7 @@ import {
   UserCheck,
   ArrowRight,
   ShieldCheck,
+  ShieldAlert,
   Sparkles,
   Stethoscope
 } from "lucide-react";
@@ -26,6 +27,15 @@ const clinicalModules = [
     badge: "Pharmacology",
     tagColor: "bg-emerald-50 text-emerald-800 border-emerald-200",
     iconBg: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    title: "Drug & Food Interaction Checker",
+    description: "Screen for adverse pharmacokinetic clashes, dietary timing warnings, and severity contraindications between medications and foods.",
+    icon: ShieldAlert,
+    path: "/interactions",
+    badge: "Patient Safety",
+    tagColor: "bg-rose-50 text-rose-800 border-rose-200",
+    iconBg: "bg-rose-50 text-rose-600",
   },
   {
     title: "Disease & Pathology Guide",

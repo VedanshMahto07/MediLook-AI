@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { model } from "../Config/Gemini";
 import { 
   Search, 
@@ -15,7 +15,8 @@ import {
   Check, 
   Sparkles, 
   X,
-  FileText
+  FileText,
+  ArrowRight
 } from "lucide-react";
 import { FormattedBulletList, cleanMarkdown } from "../Utils/textFormatter";
 
@@ -212,6 +213,30 @@ CRITICAL RULES:
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Interaction Cross-Promo Banner */}
+      <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl border border-teal-200/80 p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0">
+            <ShieldAlert size={20} />
+          </div>
+          <div>
+            <div className="text-sm font-bold text-slate-900">
+              Taking multiple medications or concerned about food interactions?
+            </div>
+            <div className="text-xs text-slate-600">
+              Cross-check contraindications, severity risks, and dietary timing clashes in seconds.
+            </div>
+          </div>
+        </div>
+        <Link
+          to="/interactions"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-semibold transition-colors shrink-0 shadow-xs"
+        >
+          <span>Check Interactions</span>
+          <ArrowRight size={15} />
+        </Link>
       </div>
 
       {/* Error state */}

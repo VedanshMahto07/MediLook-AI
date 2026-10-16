@@ -2,6 +2,7 @@ import Home from "./Pages/Home.jsx";
 import Disease from "./Pages/Disease.jsx";
 import Doctor from "./Pages/Doctor.jsx";
 import Medicines from "./Pages/Medicines.jsx";
+import DrugInteractions from "./Pages/DrugInteractions.jsx";
 import Remedies from "./Pages/Remedies.jsx";
 import Symptoms from "./Pages/Symptoms.jsx";
 import { Routes, Route } from "react-router-dom";
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/medicine" element={<Medicines />} />
+          <Route path="/interactions" element={<DrugInteractions />} />
           <Route path="/disease" element={<Disease />} />
           <Route path="/symptoms" element={<Symptoms />} />
           <Route path="/remedies" element={<Remedies />} />

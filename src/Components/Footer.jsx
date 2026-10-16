@@ -73,6 +73,11 @@ function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/interactions" className="hover:text-emerald-700 transition-colors">
+                  Drug & Food Interactions
+                </Link>
+              </li>
+              <li>
                 <Link to="/disease" className="hover:text-emerald-700 transition-colors">
                   Disease Database
                 </Link>

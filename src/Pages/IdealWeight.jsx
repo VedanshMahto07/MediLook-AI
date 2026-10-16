@@ -151,10 +151,6 @@ function IdealWeight() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-sm font-semibold mb-3 shadow-xs">
-          <Scale size={16} className="text-teal-600" />
-          <span>Body Composition & Target Weight</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Ideal Body Weight Calculator
         </h1>
