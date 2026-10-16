@@ -194,8 +194,9 @@ function Bmi() {
             {(() => {
               const val = parseFloat(bmi) || 22;
               const clampedBmi = Math.max(12, Math.min(val, 38));
-              // Rotation: -180 deg (far left) to 0 deg (far right)
-              const needleRotation = -180 + ((clampedBmi - 12) / (38 - 12)) * 180;
+              // The needle path points straight UP (at 25.0).
+              // Angle ranges from -90 deg (left tick 12) to +90 deg (right tick 38).
+              const needleRotation = -90 + ((clampedBmi - 12) / (38 - 12)) * 180;
               
               const r = 85;
               const circumference = 2 * Math.PI * r; // ~534.07
@@ -284,9 +285,8 @@ function Bmi() {
 
                     {/* Needle Indicator */}
                     <g
+                      transform={`rotate(${needleRotation} 120 125)`}
                       style={{
-                        transform: `rotate(${needleRotation}deg)`,
-                        transformOrigin: "120px 125px",
                         transition: "transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
                       }}
                     >
