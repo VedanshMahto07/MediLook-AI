@@ -80,7 +80,7 @@ function Hero() {
         <div className="mt-7 max-w-3xl mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-lg shadow-slate-200/40 p-4 sm:p-5 text-left transition-all">
           
           {/* Tab Selection */}
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-100 mb-3.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-slate-100 mb-3.5 w-full justify-start sm:justify-between">
             {searchTabs.map((tab) => {
               const Icon = tab.icon;
               const isSelected = activeTab === tab.id;
@@ -92,13 +92,13 @@ function Hero() {
                     setActiveTab(tab.id);
                     setSearchQuery("");
                   }}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 md:px-3 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap cursor-pointer flex-1 text-center shrink-0 sm:shrink ${
                     isSelected
                       ? "bg-emerald-600 text-white shadow-xs shadow-emerald-500/20"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                   }`}
                 >
-                  <Icon size={16} />
+                  <Icon size={15} className="shrink-0" />
                   <span>{tab.label}</span>
                 </button>
               );

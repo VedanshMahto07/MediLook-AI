@@ -164,26 +164,26 @@ function Features() {
               </Link>
             );
           })}
+        </div>
 
-          {/* Quick Action Doctor Promo Card */}
-          <div className="bg-gradient-to-br from-emerald-700 via-teal-800 to-slate-900 text-white rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-lg shadow-emerald-900/10">
-            <div>
-              <span className="inline-block text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-emerald-200 mb-4">
-                AI Consultation
-              </span>
-              <h3 className="text-xl sm:text-2xl font-bold">Have a Specific Health Question?</h3>
-              <p className="mt-2.5 text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-                Describe your concern directly to our conversational AI assistant to receive structured insights and red-flag warning signs.
-              </p>
-            </div>
-            <Link
-              to="/doctor"
-              className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white text-emerald-900 font-bold text-sm sm:text-base hover:bg-emerald-50 active:scale-95 transition-all"
-            >
-              <Bot size={18} className="text-emerald-700" />
-              <span>Launch Consultation</span>
-            </Link>
+        {/* Quick Action Doctor Promo Banner (Full width, no dedicated column) */}
+        <div className="mt-5 bg-gradient-to-r from-emerald-800 via-teal-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md shadow-emerald-950/10">
+          <div className="space-y-2 text-center md:text-left">
+            <span className="inline-block text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-emerald-200">
+              AI Consultation
+            </span>
+            <h3 className="text-xl sm:text-2xl font-bold">Have a Specific Health Question?</h3>
+            <p className="text-sm sm:text-base text-emerald-100/90 max-w-2xl leading-relaxed">
+              Describe your concern directly to our conversational AI assistant to receive structured insights and red-flag warning signs.
+            </p>
           </div>
+          <Link
+            to="/doctor"
+            className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white text-emerald-950 font-bold text-sm sm:text-base hover:bg-emerald-50 active:scale-95 transition-all shadow-sm"
+          >
+            <Bot size={19} className="text-emerald-700" />
+            <span>Launch Consultation</span>
+          </Link>
         </div>
       </div>
 
