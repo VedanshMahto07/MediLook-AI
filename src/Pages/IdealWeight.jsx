@@ -52,10 +52,6 @@ function IdealWeight() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs font-semibold mb-3">
-          <TrendingUp size={14} className="text-teal-600" />
-          <span>Devine & WHO Clinical Metric</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Ideal Body Weight (IBW) Calculator
         </h1>
@@ -70,7 +66,7 @@ function IdealWeight() {
           
           {/* Gender Selector */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Biological Sex
             </label>
             <div className="grid grid-cols-2 gap-3 max-w-sm">
@@ -101,7 +97,7 @@ function IdealWeight() {
 
           {/* Height Input */}
           <div className="max-w-md">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Your Height
             </label>
             <div className="relative">
@@ -115,7 +111,7 @@ function IdealWeight() {
                 onChange={(e) => setHeight(e.target.value)}
                 className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 text-base"
               />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                 cm
               </span>
             </div>

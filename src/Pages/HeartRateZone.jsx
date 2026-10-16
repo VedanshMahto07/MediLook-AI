@@ -42,10 +42,6 @@ function HeartRateZone() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50 border border-rose-200/80 text-rose-800 text-xs font-semibold mb-3">
-          <Heart size={14} className="text-rose-600" />
-          <span>Cardiopulmonary Thresholds</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Target Heart Rate Training Zones
         </h1>
@@ -120,8 +116,8 @@ function HeartRateZone() {
             <div className="text-5xl sm:text-6xl font-extrabold text-slate-900 my-2 tracking-tight">
               {result.maxHR} <span className="text-xl font-medium text-slate-400">BPM</span>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Beats per minute upper ceiling according to standard Fox formula (220 - age).
+            <p className="text-sm text-slate-500 mt-1">
+              Beats per minute upper ceiling based on age calculation (220 - age).
             </p>
           </div>
 
@@ -137,9 +133,6 @@ function HeartRateZone() {
                   Click any zone segment to inspect physiological fuel sources, breathing pace, and weekly targets.
                 </p>
               </div>
-              <span className="text-xs font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full border border-rose-200 self-start sm:self-auto">
-                Fox Protocol
-              </span>
             </div>
 
             {/* Continuous Spectrum Bar */}
@@ -223,47 +216,47 @@ function HeartRateZone() {
               </div>
             </div>
 
-            {/* Weekly Target Recommendations (AHA Guidelines) */}
+            {/* Weekly Target Recommendations */}
             <div className="mt-8 pt-6 border-t border-slate-100">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-4 flex items-center gap-1.5">
-                <Timer size={15} className="text-slate-400" />
-                <span>Cardiologist Weekly Dose Guideline (American Heart Association)</span>
+              <h4 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-1.5">
+                <Timer size={17} className="text-slate-400" />
+                <span>Recommended Weekly Training Guidelines</span>
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-emerald-800">Zone 2 Base Cardio</span>
-                    <span className="text-xs font-bold text-emerald-700 bg-white px-2 py-0.5 rounded-full border border-emerald-200">
+                    <span className="text-sm font-bold text-emerald-900">Zone 2 Base Cardio</span>
+                    <span className="text-xs sm:text-sm font-bold text-emerald-700 bg-white px-2.5 py-0.5 rounded-full border border-emerald-200">
                       150–180 min/wk
                     </span>
                   </div>
-                  <p className="text-xs text-emerald-950/80 mt-2">
-                    Mitochondrial biogenesis & high fat-oxidation rate. Talk test: Easy conversation.
+                  <p className="text-xs sm:text-sm text-emerald-950/90 mt-2 leading-relaxed">
+                    Mitochondrial health & fat-burning efficiency. Talk test: Easy conversation.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-teal-50/70 border border-teal-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-teal-800">Zone 3–4 Threshold</span>
-                    <span className="text-xs font-bold text-teal-700 bg-white px-2 py-0.5 rounded-full border border-teal-200">
+                    <span className="text-sm font-bold text-teal-900">Zone 3–4 Threshold</span>
+                    <span className="text-xs sm:text-sm font-bold text-teal-700 bg-white px-2.5 py-0.5 rounded-full border border-teal-200">
                       45–75 min/wk
                     </span>
                   </div>
-                  <p className="text-xs text-teal-950/80 mt-2">
-                    Elevates stroke volume and lactate clearing threshold. Talk test: Broken sentences.
+                  <p className="text-xs sm:text-sm text-teal-950/90 mt-2 leading-relaxed">
+                    Improves heart stroke volume & stamina. Talk test: Short sentences only.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-rose-800">Zone 5 Peak Intervals</span>
-                    <span className="text-xs font-bold text-rose-700 bg-white px-2 py-0.5 rounded-full border border-rose-200">
+                    <span className="text-sm font-bold text-rose-900">Zone 5 Peak Intervals</span>
+                    <span className="text-xs sm:text-sm font-bold text-rose-700 bg-white px-2.5 py-0.5 rounded-full border border-rose-200">
                       10–15 min/wk
                     </span>
                   </div>
-                  <p className="text-xs text-rose-950/80 mt-2">
-                    Maximal VO2 capacity & heart chamber elasticity. Talk test: Cannot speak.
+                  <p className="text-xs sm:text-sm text-rose-950/90 mt-2 leading-relaxed">
+                    High-intensity sprint output & VO2 max conditioning. Talk test: Cannot speak.
                   </p>
                 </div>
               </div>

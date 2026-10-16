@@ -95,10 +95,6 @@ function BodyFat() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200/80 text-purple-800 text-xs font-semibold mb-3">
-          <UserCheck size={14} className="text-purple-600" />
-          <span>Deurenberg Anthropometric Model</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Body Fat Percentage Calculator
         </h1>
@@ -113,7 +109,7 @@ function BodyFat() {
           
           {/* Gender Selector */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Biological Sex
             </label>
             <div className="grid grid-cols-2 gap-3 max-w-sm">
@@ -145,7 +141,7 @@ function BodyFat() {
           {/* Measurements */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Age
               </label>
               <div className="relative">
@@ -158,14 +154,14 @@ function BodyFat() {
                   onChange={(e) => setAge(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   yrs
                 </span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Height
               </label>
               <div className="relative">
@@ -178,14 +174,14 @@ function BodyFat() {
                   onChange={(e) => setHeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   cm
                 </span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Weight
               </label>
               <div className="relative">
@@ -198,7 +194,7 @@ function BodyFat() {
                   onChange={(e) => setWeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   kg
                 </span>
               </div>

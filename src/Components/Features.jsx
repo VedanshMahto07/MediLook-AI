@@ -86,7 +86,7 @@ const healthCalculators = [
   },
   {
     title: "Body Fat Estimator",
-    description: "Evaluate your body composition and lean-to-fat tissue ratio using anthropometric data.",
+    description: "Calculate your body fat percentage, lean muscle mass, and healthy body composition.",
     icon: UserCheck,
     path: "/health-tools/body-fat",
   },

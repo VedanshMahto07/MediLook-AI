@@ -105,10 +105,6 @@ function Calories() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-800 text-xs font-semibold mb-3">
-          <Flame size={14} className="text-orange-600" />
-          <span>Mifflin-St Jeor Energy Expenditure Model</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Daily Calorie & TDEE Calculator
         </h1>
@@ -123,7 +119,7 @@ function Calories() {
           
           {/* Gender Selector */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Biological Sex
             </label>
             <div className="grid grid-cols-2 gap-3 max-w-sm">
@@ -155,7 +151,7 @@ function Calories() {
           {/* Measurements Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Age
               </label>
               <div className="relative">
@@ -168,14 +164,14 @@ function Calories() {
                   onChange={(e) => setAge(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   yrs
                 </span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Height
               </label>
               <div className="relative">
@@ -188,14 +184,14 @@ function Calories() {
                   onChange={(e) => setHeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   cm
                 </span>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Weight
               </label>
               <div className="relative">
@@ -208,7 +204,7 @@ function Calories() {
                   onChange={(e) => setWeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   kg
                 </span>
               </div>
@@ -217,7 +213,7 @@ function Calories() {
 
           {/* Activity Level */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Physical Activity Level
             </label>
             <select

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Scale, CheckCircle2, AlertCircle, RefreshCw, Info, HeartPulse } from "lucide-react";
+import { Scale, CheckCircle2, AlertCircle, RefreshCw, Info, HeartPulse, Gauge, ShieldCheck, Activity, AlertTriangle } from "lucide-react";
 
 function Bmi() {
   const [height, setHeight] = useState("");
@@ -92,14 +92,10 @@ function Bmi() {
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold mb-3">
-          <Scale size={14} className="text-emerald-600" />
-          <span>WHO Anthropometric Metric</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           BMI Calculator
         </h1>
-        <p className="mt-2 text-sm sm:text-base text-slate-600">
+        <p className="mt-2 text-base sm:text-lg text-slate-600">
           Calculate your Body Mass Index and identify whether your weight falls into a healthy clinical range.
         </p>
       </div>
@@ -111,7 +107,7 @@ function Bmi() {
             
             {/* Height input */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Height (in Centimeters)
               </label>
               <div className="relative">
@@ -125,7 +121,7 @@ function Bmi() {
                   onChange={(e) => setHeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   cm
                 </span>
               </div>
@@ -133,7 +129,7 @@ function Bmi() {
 
             {/* Weight input */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">
                 Weight (in Kilograms)
               </label>
               <div className="relative">
@@ -142,12 +138,12 @@ function Bmi() {
                   min="2"
                   max="500"
                   step="0.1"
-                  placeholder="e.g., 70"
+                  placeholder="e.g., 68"
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                   className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 text-base"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-400">
                   kg
                 </span>
               </div>
@@ -188,37 +184,139 @@ function Bmi() {
       {bmi && (
         <div className="space-y-6 animate-in fade-in duration-300">
           
-          {/* Main Score Card */}
+          {/* Main Speedometer Gauge Score Card */}
           <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 text-center">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              Your Calculated Score
+              Your Calculated Body Mass Index
             </span>
-            <div className="text-5xl sm:text-6xl font-extrabold text-slate-900 my-2 tracking-tight">
+
+            {/* SVG Speedometer Gauge */}
+            {(() => {
+              const val = parseFloat(bmi) || 22;
+              const clampedBmi = Math.max(12, Math.min(val, 38));
+              // Rotation: -180 deg (far left) to 0 deg (far right)
+              const needleRotation = -180 + ((clampedBmi - 12) / (38 - 12)) * 180;
+              
+              const r = 85;
+              const circumference = 2 * Math.PI * r; // ~534.07
+              const halfCirc = Math.PI * r; // ~267.04
+              
+              const lenU = (6.5 / 26) * halfCirc; // Underweight: ~66.76
+              const lenN = (6.5 / 26) * halfCirc; // Normal: ~66.76
+              const lenO = (5.0 / 26) * halfCirc; // Overweight: ~51.35
+              const lenOb = (8.0 / 26) * halfCirc; // Obese: ~82.17
+
+              const offU = 0;
+              const offN = lenU;
+              const offO = lenU + lenN;
+              const offOb = lenU + lenN + lenO;
+
+              return (
+                <div className="relative max-w-xs mx-auto my-2">
+                  <svg viewBox="0 0 240 145" className="w-full h-auto overflow-visible">
+                    {/* Background Track */}
+                    <path
+                      d="M 35 125 A 85 85 0 0 1 205 125"
+                      fill="none"
+                      stroke="#f1f5f9"
+                      strokeWidth="16"
+                      strokeLinecap="round"
+                    />
+
+                    {/* Underweight Segment (Sky Blue) */}
+                    <circle
+                      cx="120"
+                      cy="125"
+                      r={r}
+                      fill="none"
+                      stroke="#38bdf8"
+                      strokeWidth="16"
+                      strokeDasharray={`${lenU} ${circumference - lenU}`}
+                      strokeDashoffset={-offU}
+                      className="-rotate-180 origin-[120px_125px]"
+                    />
+
+                    {/* Normal Weight Segment (Emerald) */}
+                    <circle
+                      cx="120"
+                      cy="125"
+                      r={r}
+                      fill="none"
+                      stroke="#10b981"
+                      strokeWidth="16"
+                      strokeDasharray={`${lenN} ${circumference - lenN}`}
+                      strokeDashoffset={-offN}
+                      className="-rotate-180 origin-[120px_125px]"
+                    />
+
+                    {/* Overweight Segment (Amber) */}
+                    <circle
+                      cx="120"
+                      cy="125"
+                      r={r}
+                      fill="none"
+                      stroke="#f59e0b"
+                      strokeWidth="16"
+                      strokeDasharray={`${lenO} ${circumference - lenO}`}
+                      strokeDashoffset={-offO}
+                      className="-rotate-180 origin-[120px_125px]"
+                    />
+
+                    {/* Obese Segment (Rose) */}
+                    <circle
+                      cx="120"
+                      cy="125"
+                      r={r}
+                      fill="none"
+                      stroke="#f43f5e"
+                      strokeWidth="16"
+                      strokeDasharray={`${lenOb} ${circumference - lenOb}`}
+                      strokeDashoffset={-offOb}
+                      className="-rotate-180 origin-[120px_125px]"
+                    />
+
+                    {/* Ticks & Labels */}
+                    <text x="35" y="142" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">12</text>
+                    <text x="78" y="50" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">18.5</text>
+                    <text x="120" y="30" textAnchor="middle" className="text-[10px] fill-emerald-600 font-bold">25.0</text>
+                    <text x="165" y="50" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">30.0</text>
+                    <text x="205" y="142" textAnchor="middle" className="text-[10px] fill-slate-400 font-bold">38+</text>
+
+                    {/* Needle Indicator */}
+                    <g
+                      style={{
+                        transform: `rotate(${needleRotation}deg)`,
+                        transformOrigin: "120px 125px",
+                        transition: "transform 1s cubic-bezier(0.34, 1.56, 0.64, 1)"
+                      }}
+                    >
+                      <path
+                        d="M 118 125 L 119.5 45 L 120.5 45 L 122 125 Z"
+                        fill="#0f172a"
+                      />
+                      <circle cx="120" cy="125" r="7" fill="#0f172a" stroke="#ffffff" strokeWidth="2.5" />
+                      <circle cx="120" cy="125" r="2.5" fill="#ffffff" />
+                    </g>
+                  </svg>
+                </div>
+              );
+            })()}
+
+            {/* Score & Category Display */}
+            <div className="text-5xl sm:text-6xl font-extrabold text-slate-900 tracking-tight mt-1">
               {bmi} <span className="text-xl font-medium text-slate-400">kg/m²</span>
             </div>
-            
-            <div className="mt-3">
-              <span className={`inline-flex px-4 py-1.5 rounded-full text-sm font-bold border ${getCategoryDetails().bg} ${getCategoryDetails().text}`}>
-                {category}
+
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-bold border shadow-xs ${getCategoryDetails().bg} ${getCategoryDetails().text}`}>
+                <HeartPulse size={16} />
+                <span>{category}</span>
               </span>
             </div>
 
-            {/* Visual BMI Range Spectrum */}
-            <div className="mt-8 max-w-lg mx-auto">
-              <div className="h-3.5 rounded-full bg-slate-100 flex overflow-hidden p-0.5 border border-slate-200">
-                <div className="w-[18.5%] bg-amber-400 rounded-l-full" title="Underweight (<18.5)"></div>
-                <div className="w-[30%] bg-emerald-500" title="Normal (18.5 - 24.9)"></div>
-                <div className="w-[25%] bg-orange-400" title="Overweight (25 - 29.9)"></div>
-                <div className="w-[26.5%] bg-red-500 rounded-r-full" title="Obese (30+)"></div>
-              </div>
-
-              <div className="flex justify-between text-[11px] text-slate-400 mt-2 font-medium">
-                <span>&lt; 18.5 (Under)</span>
-                <span>18.5 - 24.9 (Normal)</span>
-                <span>25 - 29.9 (Over)</span>
-                <span>30+ (Obese)</span>
-              </div>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-500 mt-2 font-medium">
+              Healthy Target Window: <strong className="text-emerald-700">18.5 – 24.9 kg/m²</strong>
+            </p>
           </div>
 
           {/* Recommendations Card */}
@@ -241,37 +339,146 @@ function Bmi() {
         </div>
       )}
 
-      {/* Clinical BMI Scale Reference */}
+      {/* Clinical BMI Scale Reference - Revamped UI */}
       <div className="mt-8 bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
-        <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-          <Info size={17} className="text-slate-400" />
-          <span>WHO Body Mass Index Classification Scale</span>
-        </h3>
+        
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+          <div>
+            <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Gauge size={20} className="text-emerald-600" />
+              <span>Body Mass Index (BMI) Reference Scale</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Standard clinical thresholds used by epidemiologists and preventive physicians.
+            </p>
+          </div>
+          {category && (
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 self-start sm:self-auto">
+              Active: {category}
+            </span>
+          )}
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-          <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200">
-            <span className="font-bold text-amber-900 block">Underweight</span>
-            <span className="text-amber-700 text-sm font-semibold">&lt; 18.5 kg/m²</span>
-            <p className="text-[11px] text-amber-800/80 mt-1">Increased risk of nutritional deficiency.</p>
+        {/* Continuous Color Indicator Bar */}
+        <div className="mb-6 space-y-1.5">
+          <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden flex p-0.5 border border-slate-200">
+            <div className="w-[25%] bg-sky-400 rounded-l-full" title="Underweight (<18.5)"></div>
+            <div className="w-[25%] bg-emerald-500" title="Normal (18.5 - 24.9)"></div>
+            <div className="w-[19.2%] bg-amber-400" title="Overweight (25 - 29.9)"></div>
+            <div className="w-[30.8%] bg-rose-500 rounded-r-full" title="Obese (≥30.0)"></div>
+          </div>
+          <div className="flex justify-between text-[11px] font-bold text-slate-400 px-1">
+            <span>&lt; 18.5</span>
+            <span>18.5 – 24.9</span>
+            <span>25.0 – 29.9</span>
+            <span>≥ 30.0</span>
+          </div>
+        </div>
+
+        {/* 4 Interactive Category Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Underweight */}
+          <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 ${
+            category === "Underweight"
+              ? "bg-sky-50/90 border-sky-400 ring-2 ring-sky-400/30 shadow-md"
+              : "bg-slate-50/60 border-slate-200/90 hover:bg-white hover:border-slate-300"
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm">
+                <Scale size={16} />
+              </span>
+              {category === "Underweight" && (
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-600 text-white shadow-xs">
+                  Your Score
+                </span>
+              )}
+            </div>
+            <h4 className="font-bold text-slate-900 text-base">Underweight</h4>
+            <div className="text-sky-700 font-extrabold text-sm sm:text-base my-1">
+              &lt; 18.5 <span className="text-xs font-normal text-slate-500">kg/m²</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
+              Higher risk of micronutrient deficiencies, weakened immune function, and bone density loss.
+            </p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200">
-            <span className="font-bold text-emerald-900 block">Normal Weight</span>
-            <span className="text-emerald-700 text-sm font-semibold">18.5 – 24.9 kg/m²</span>
-            <p className="text-[11px] text-emerald-800/80 mt-1">Lowest statistical disease mortality risk.</p>
+          {/* Normal Weight */}
+          <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 ${
+            category === "Normal Weight"
+              ? "bg-emerald-50/90 border-emerald-400 ring-2 ring-emerald-400/30 shadow-md"
+              : "bg-slate-50/60 border-slate-200/90 hover:bg-white hover:border-slate-300"
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                <ShieldCheck size={16} />
+              </span>
+              {category === "Normal Weight" && (
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs">
+                  Your Score ✓
+                </span>
+              )}
+            </div>
+            <h4 className="font-bold text-slate-900 text-base">Normal Weight</h4>
+            <div className="text-emerald-700 font-extrabold text-sm sm:text-base my-1">
+              18.5 – 24.9 <span className="text-xs font-normal text-slate-500">kg/m²</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
+              Lowest statistical disease incidence and optimal cardiovascular health longevity.
+            </p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200">
-            <span className="font-bold text-orange-900 block">Overweight</span>
-            <span className="text-orange-700 text-sm font-semibold">25.0 – 29.9 kg/m²</span>
-            <p className="text-[11px] text-orange-800/80 mt-1">Elevated risk for hypertension and lipids.</p>
+          {/* Overweight */}
+          <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 ${
+            category === "Overweight"
+              ? "bg-amber-50/90 border-amber-400 ring-2 ring-amber-400/30 shadow-md"
+              : "bg-slate-50/60 border-slate-200/90 hover:bg-white hover:border-slate-300"
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm">
+                <Activity size={16} />
+              </span>
+              {category === "Overweight" && (
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-600 text-white shadow-xs">
+                  Your Score
+                </span>
+              )}
+            </div>
+            <h4 className="font-bold text-slate-900 text-base">Overweight</h4>
+            <div className="text-amber-700 font-extrabold text-sm sm:text-base my-1">
+              25.0 – 29.9 <span className="text-xs font-normal text-slate-500">kg/m²</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
+              Elevated strain on joints and early indicators for hypertension or lipid variations.
+            </p>
           </div>
 
-          <div className="p-3.5 rounded-2xl bg-red-50/70 border border-red-200">
-            <span className="font-bold text-red-900 block">Obese Class</span>
-            <span className="text-red-700 text-sm font-semibold">≥ 30.0 kg/m²</span>
-            <p className="text-[11px] text-red-800/80 mt-1">High cardiovascular & metabolic risk.</p>
+          {/* Obese Class */}
+          <div className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 ${
+            category === "Obese"
+              ? "bg-rose-50/90 border-rose-400 ring-2 ring-rose-400/30 shadow-md"
+              : "bg-slate-50/60 border-slate-200/90 hover:bg-white hover:border-slate-300"
+          }`}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold text-sm">
+                <AlertTriangle size={16} />
+              </span>
+              {category === "Obese" && (
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-600 text-white shadow-xs">
+                  Your Score
+                </span>
+              )}
+            </div>
+            <h4 className="font-bold text-slate-900 text-base">Obese Class</h4>
+            <div className="text-rose-700 font-extrabold text-sm sm:text-base my-1">
+              ≥ 30.0 <span className="text-xs font-normal text-slate-500">kg/m²</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
+              Substantially higher risks for type 2 diabetes, sleep apnea, and vascular conditions.
+            </p>
           </div>
+
         </div>
       </div>
 
