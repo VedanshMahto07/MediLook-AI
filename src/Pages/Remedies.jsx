@@ -5,6 +5,7 @@ import {
   Leaf, 
   Search, 
   AlertCircle, 
+  AlertTriangle,
   Apple, 
   Ban, 
   Activity, 
@@ -43,10 +44,25 @@ function Remedies() {
       setResult(null);
 
       const prompt = `
-Provide concise, patient-friendly natural home remedies for "${input}".
+You are an expert clinical naturopath and evidence-based medical validation AI.
+Evaluate the search query: "${input}".
 
+STEP 1: STRICT VALIDATION
+Verify whether "${input}" is a genuine, recognized health condition, biological symptom, or mild ailment (e.g. common cold, migraine, sore throat, indigestion, muscle fatigue).
+
+If "${input}" is NOT a real recognized ailment, symptom, or medical condition (e.g., gibberish like "asdfgh", fictional conditions, or everyday non-medical terms):
 Return ONLY a valid JSON object matching this schema:
 {
+  "isValid": false,
+  "searchedQuery": "${input}",
+  "message": "No recognized clinical condition, symptom, or ailment found matching '${input}'.",
+  "suggestions": ["Common Cold & Sore Throat", "Acid Reflux / Heartburn", "Tension Headache", "Insomnia", "Indigestion"]
+}
+
+STEP 2: IF AND ONLY IF "${input}" IS A REAL, LEGITIMATE AILMENT OR CONDITION:
+Return ONLY a valid JSON object matching this exact schema:
+{
+  "isValid": true,
   "condition": "${input}",
   "overview": "Brief medical summary (under 25 words) of the condition.",
   "naturalRemedies": [
@@ -73,6 +89,7 @@ Return ONLY a valid JSON object matching this schema:
 }
 
 CRITICAL RULES:
+- Never fabricate, guess, or hallucinate medical information for fake or gibberish terms.
 - Keep all points bite-sized, clear, and easy for patients to skim in seconds.
 - Maximum 3 to 4 points per array. Maximum 12 to 15 words per point.
 - Do NOT use markdown bolding like ** or asterisks * inside any values.
@@ -231,8 +248,50 @@ CRITICAL RULES:
         </div>
       )}
 
+      {/* NON-EXISTENT / INVALID CONDITION ALERT CARD */}
+      {result && !loading && result.isValid === false && (
+        <div className="bg-white rounded-3xl border border-amber-200 shadow-sm p-6 sm:p-8 animate-in fade-in duration-300">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+              <AlertTriangle size={24} />
+            </div>
+            <div className="flex-1 space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wide">
+                <span>Unrecognized Condition</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+                No Record Found for "{result.searchedQuery || condition}"
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                MediLook strictly validates searches against genuine medical ailments and symptoms. We do not generate speculative natural remedies for unrecognized or non-existent conditions.
+              </p>
+
+              {result.suggestions && result.suggestions.length > 0 && (
+                <div className="pt-3 border-t border-slate-100 mt-4">
+                  <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                    Did you mean or want to explore:
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {result.suggestions.map((sug, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => handleChipClick(sug)}
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-2xs"
+                      >
+                        🌿 {sug}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results View */}
-      {result && !loading && (
+      {result && !loading && result.isValid !== false && (
         <div className="space-y-6 animate-in fade-in duration-300">
           
           {/* Main Card */}
