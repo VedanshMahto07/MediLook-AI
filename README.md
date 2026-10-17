@@ -1,11 +1,11 @@
-# MediLook AI — Clinical Health & Pharmacology Intelligence Platform
+# MediLook — Clinical Health & Pharmacology Intelligence Platform
 
 [![React](https://img.shields.io/badge/React-19.0.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Gemini AI](https://img.shields.io/badge/Google_Gemini-2.5_Flash-8E75B2?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 
-MediLook AI is a clinical-grade, modern healthcare and medical intelligence web platform. It pairs Google Gemini's generative AI models with evidence-based schemas to provide structured, bite-sized health insights, medicine monographs, symptom triage, natural remedy guidance, and interactive biometric calculators.
+MediLook is a clinical-grade, modern healthcare and medical intelligence web platform. It pairs Google Gemini's generative AI models with evidence-based schemas to provide structured, bite-sized health insights, medicine monographs, symptom triage, natural remedy guidance, and interactive biometric calculators.
 
 ---
 
@@ -91,7 +91,7 @@ MediLook AI is a clinical-grade, modern healthcare and medical intelligence web 
 
 ## ⚠️ Medical Disclaimer
 
-MediLook AI is an educational and informational tool intended to assist users in understanding medical information and wellness metrics. It is **not** a substitute for professional medical advice, clinical diagnosis, or treatment. Always consult a qualified healthcare provider for any medical concerns. In an emergency, immediately call **911** (US/CA), **112** (EU/IN), or your local emergency response hotline.
+MediLook is an educational and informational tool intended to assist users in understanding medical information and wellness metrics. It is **not** a substitute for professional medical advice, clinical diagnosis, or treatment. Always consult a qualified healthcare provider for any medical concerns. In an emergency, immediately call **911** (US/CA), **112** (EU/IN), or your local emergency response hotline.
 
 ---
 

@@ -249,7 +249,7 @@ function Features() {
               Committed to Patient Safety & Transparent Medicine
             </h4>
             <p className="text-xs sm:text-sm md:text-base text-emerald-900/90 mt-1 max-w-2xl leading-relaxed">
-              MediLook AI is designed to support, not replace, the relationship between patient and physician. Our algorithmic models apply safety filters to detect high-risk emergencies and advise timely clinical intervention.
+              MediLook is designed to support, not replace, the relationship between patient and physician. Our algorithmic models apply safety filters to detect high-risk emergencies and advise timely clinical intervention.
             </p>
           </div>
         </div>

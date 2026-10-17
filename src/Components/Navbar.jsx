@@ -44,9 +44,6 @@ function Navbar() {
                 <span className="text-xl font-bold text-slate-900 tracking-tight">
                   MediLook
                 </span>
-                <span className="px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-800 rounded-md">
-                  AI
-                </span>
               </div>
             </div>
           </Link>

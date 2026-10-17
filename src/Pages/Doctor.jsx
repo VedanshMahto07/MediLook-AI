@@ -32,7 +32,7 @@ function Doctor() {
       type: "ai",
       isWelcome: true,
       data: {
-        answer: "Hello, I am your MediLook AI Clinical Assistant. You can ask me any health-related question, discuss symptoms, or seek general medical guidance. How may I assist you today?",
+        answer: "Hello, I am your MediLook Clinical Assistant. You can ask me any health-related question, discuss symptoms, or seek general medical guidance. How may I assist you today?",
         recommendations: [
           "Be specific about symptom duration, severity, and triggers.",
           "Note any known existing conditions or medications."
@@ -69,7 +69,7 @@ function Doctor() {
       setLoading(true);
 
       const prompt = `
-You are MediLook AI, a thoughtful, evidence-based, compassionate clinical health assistant.
+You are MediLook, a thoughtful, evidence-based, compassionate clinical health assistant.
 The patient asks:
 "${textToSend}"
 
@@ -150,7 +150,7 @@ Rules:
         type: "ai",
         isWelcome: true,
         data: {
-          answer: "Hello, I am your MediLook AI Clinical Assistant. You can ask me any health-related question, discuss symptoms, or seek general medical guidance. How may I assist you today?",
+          answer: "Hello, I am your MediLook Clinical Assistant. You can ask me any health-related question, discuss symptoms, or seek general medical guidance. How may I assist you today?",
           recommendations: [
             "Be specific about symptom duration, severity, and triggers.",
             "Note any known existing conditions or medications."

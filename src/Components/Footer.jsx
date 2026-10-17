@@ -20,7 +20,7 @@ function Footer() {
                 <HeartPulse size={22} />
               </div>
               <span className="text-xl font-bold text-slate-900 tracking-tight">
-                MediLook <span className="text-emerald-600">AI</span>
+                MediLook
               </span>
             </Link>
 
@@ -164,7 +164,7 @@ function Footer() {
 
         {/* Bottom Copyright & Disclaimer */}
         <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-500">
-          <p>© {new Date().getFullYear()} MediLook AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} MediLook. All rights reserved.</p>
           <p className="text-center md:text-right max-w-xl text-xs text-slate-500">
             MediLook does not provide clinical medical diagnosis or write prescriptions. Always seek advice from licensed physicians for clinical decisions.
           </p>
